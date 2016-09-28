@@ -1,5 +1,5 @@
 ---
-title: "Linear Regression"
+Title: "Linear  Regression"
 ---
 
 #### Exercise 1: The objective of this exercise is to fit a model predicting energy consumed per capita (energy) from the percentage of residents living in metropolitan areas (metro).The dataset used includes data about various states in the USA comprising of 51 states with 21 characteristics (region,population,density,etc).
@@ -8,9 +8,10 @@ title: "Linear Regression"
 
 We begin by inspecting our dataset.
 ```{r Load data}
-states.data0 <- readRDS("datasets/states.rds")
+ setwd("~/Git/Rstatistics")
+ states.data0 <- readRDS("datasets/states.rds")
   states.info0 <- data.frame(attributes(states.data0)[c("names", "var.labels")])
- head(states.info0,5)
+ head(states.info0,5) 
 ```
 
 
@@ -18,12 +19,11 @@ As we can see,the first 5 characteristics are state,geographical region,populati
 
 Since we want to fit a model that describes the relationship between the variables energy and metro, we extract this data from the dataset using the subset function. 
 ```{r Extract information}
-sts.ex.sat0 <- subset(states.data0,select = c("energy","metro"))
+  sts.ex.sat0 <- subset(states.data0,select = c("energy","metro"))
  summary(sts.ex.sat0)
+ ```
 
-```
-
-The summary function is  used above to get different measures which descibe the type of distributions that the two datasets(energy and metro) have. The table shows that the  minimum value of energy consumed per capita is 200 (city:New York) whereas the minimum percent of residents living in metropolitan cities is 20% (city:Idaho). Similarly,the maximum values for energy and metro are 991.0 and 100%. 
+ The summary function is  used above to get different measures which descibe the type of distributions that the two datasets(energy and metro) have. The table shows that the  minimum value of energy consumed per capita is 200 (city:New York) whereas the minimum percent of residents living in metropolitan cities is 20% (city:Idaho). Similarly,the maximum values for energy and metro are 991.0 and 100%. 
 
 
 We then use the correlation function to establish a relationship between energy and metro variables.
@@ -115,7 +115,8 @@ The table shows us that there is not much of a significant difference among vari
 The data is initially loaded into NH11 using the readRDS function.We then study the data using str() and collapse all mising values to NA.Once this is done,we run our regression model using glm().
 
 
-```{r}
+```{r load new data}
+setwd("~/Git/Rstatistics")
 NH11 <- readRDS("dataSets/NatHealth2011.rds")
 str(NH11$everwrk)
 levels(NH11$everwrk)
@@ -127,7 +128,7 @@ coef(summary(evr.out))
 From the str() and levels() functions,it is observed that there are 5 levels in the category of people working- yes(1),no(2),Refused(7),Not ascertained(8)  and Dont Know(9). When the regression is applied to the model, we are able to get a table that describes the relationship between working people and  marital status and age. As we can observe from the table, the highest z value(18.11) is of age(age_p), which implies that it has a stronger effect on working people. Its deviation from the estimate(standard error=0.001) is the least which proves our hypothesis. 
 
 To predict the probability of working for each level of marital status, we load the effects package using require().
-```{r}
+```{r load packages}
 require(effects)
 data.frame(Effect("r_maritl", evr.out))                                     
 ```
@@ -143,7 +144,7 @@ c. Runing a second multi-level model that adds two individual-level predictors, 
 d. adding a random effect of average number of hours worked ("HRS") to the model and interpret          output. Test the significance of this random term.
 
 The required packages are loaded, that is, multilevel,matrix,lme4 and multilevel.
-```{r}
+```{r load data}
 data(bh1996, package="multilevel")
 require("Matrix")
 require("lme4")
@@ -154,7 +155,7 @@ data(bh1996, package="multilevel")
 
 
 A null model predicting wellbeing ("WBEING") is created.
-```{r}
+```{r null model}
 WBEING <- lmer(WBEING ~ 1 + (1|G.HRS),  data=bh1996, REML = FALSE) 
 summary(WBEING)
 ```
@@ -162,7 +163,7 @@ summary(WBEING)
 By looking at the random effects table,the interclass correlation(ICC) is calculated.Hence, (0.03622)/(0.03622+0.78960) = 4.3% is variance at group level.
 
 
-```{r}
+```{r adding predictors}
 WBEING2 <- lmer(WBEING ~ HRS + LEAD + (1|G.HRS),  data=bh1996, REML = FALSE)  
  summary(WBEING2)
    anova(WBEING,WBEING2)
