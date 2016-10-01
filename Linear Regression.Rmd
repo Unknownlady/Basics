@@ -1,5 +1,10 @@
 ---
 Title: "Linear  Regression"
+author: "Sanya Sharma"
+date: "Octuber 1,2016"
+output:
+  md_document:
+    variant: markdown_github
 ---
 
 #### Exercise 1: The objective of this exercise is to fit a model predicting energy consumed per capita (energy) from the percentage of residents living in metropolitan areas (metro).The dataset used includes data about various states in the USA comprising of 51 states with 21 characteristics (region,population,density,etc).
